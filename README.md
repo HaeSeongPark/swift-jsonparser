@@ -1,3 +1,16 @@
+# JSONParser
+ - json을 parsing하는 프로그램
+ 
+# 사용
+ - 컴파일러 구문분석 개념 이용
+ ( Lexer : 문자열분석 /  token : lexer가 문자열을 의미단위로 만든 것 / Paser ) 
+ - 정규식 사용
+ - 단위 테스트 작성
+
+# 실행결과
+![preview](https://github.com/HaeSeongPark/swift-jsonparser/blob/HaeSeongPark/JSONParserPreview.gif)
+
+
 # 진행 방법
 
 - JSON 문자열 분석기 요구사항을 파악한다.
