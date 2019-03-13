@@ -14,50 +14,55 @@ struct JSONParser {
         case invalidToken
     }
     
-    private var jsonData = JSONData()
+    private var json = JSON()
     private var token:Token
     init(_ token:Token) {
         self.token = token
     }
     
-    mutating func parse() throws -> JSONData{
+    mutating func parse() throws -> JSON {
         
         switch token {
         case .jsonArray(let tokens):
-            jsonData.paranet = (tokens.count, "배열")
-            parseToken(tokens)
+            json.dataCase = .array
+          _ = parseJSONArray(tokens)
+            
         case .jsonObject(let object):
-            jsonData.paranet = (object.count, "객체")
-            parseToken(getTokens(object))
+            json.dataCase = .object
+          _ = parseJSONObject(object)
+            
         default:
             throw JSONParser.Error.invalidToken
         }
         
-        return jsonData
+        return json
     }
     
-   mutating private func parseToken(_ tokens:[Token]){
-        for token in tokens{
-            switch token {
-            case .jsonArray:
-                jsonData.arrayCount += 1
-            case .jsonObject:
-                jsonData.objectCount += 1
-            case .string:
-                jsonData.stringCount += 1
-            case .bool:
-                jsonData.boolCount += 1
-            case .number:
-                jsonData.numberCount += 1
-            }
+    private mutating func parseJSONObject(_ jsonObjects:[String:Token]) -> JSONObjectData {
+        for jsonObject in jsonObjects {
+            json.objectData[jsonObject.key] = tokenToValue(jsonObject.value)
         }
+        return json.objectData
     }
     
-    private func getTokens(_ jsonObject:[String:Token]) -> [Token]{
-        var tokens = [Token]()
-        for token in jsonObject{
-            tokens.append(token.value)
+    
+    private mutating func parseJSONArray(_ tokens:[Token]) -> JSONArrayData {
+        json.arrayData = tokens.map { tokenToValue($0)}
+        return json.arrayData
+    }
+    
+    private mutating func tokenToValue(_ token:Token) -> Any {
+        switch token {
+        case .bool(value: let boolData):
+            return boolData
+        case .number(value: let numberData):
+            return numberData
+        case .string(value: let stringData):
+            return stringData
+        case .jsonObject(let jsonObjects):
+            return parseJSONObject(jsonObjects)
+        case .jsonArray(tokens: let tokens):
+            return parseJSONArray(tokens)
         }
-        return tokens
     }
 }

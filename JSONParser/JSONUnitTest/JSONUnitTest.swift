@@ -81,15 +81,15 @@ class JSONUnitTest: XCTestCase {
         let myTokens = Token.jsonArray(tokens: [.number(value: 10.0), .number(value: 20.0), .number(value: 30.0), .number(value: 40.0), .number(value: 50.0)])
 
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 5, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 5, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        XCTAssertEqual(json.numberCount, 5, "should be equal")
+        XCTAssertEqual(json.stringCount, 0, "should be equal")
+        XCTAssertEqual(json.boolCount, 0, "should be equal")
+        XCTAssertEqual(json.arrayCount, 0, "should be equal")
+        XCTAssertEqual(json.objectCount, 0, "should be equal")
+        XCTAssertEqual(json.parentCount, 5, "should be equal")
+        XCTAssertEqual(json.parentName, "배열", "should be equal")
     }
     
     
@@ -105,15 +105,15 @@ class JSONUnitTest: XCTestCase {
     func testJSONLexerNumbersAndStringSuccessInParser() {
         let myTokens = Token.jsonArray(tokens: [.number(value: 10.0), .string(value: "\"20\""), .number(value: 30.0), .number(value: 40.0), .number(value: 50.0), .string(value: "\"sdf\"")])
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 4, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 6, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        XCTAssertEqual(json.numberCount, 4, "should be equal")
+        XCTAssertEqual(json.stringCount, 2, "should be equal")
+        XCTAssertEqual(json.boolCount, 0, "should be equal")
+        XCTAssertEqual(json.arrayCount, 0, "should be equal")
+        XCTAssertEqual(json.objectCount, 0, "should be equal")
+        XCTAssertEqual(json.parentCount, 6, "should be equal")
+        XCTAssertEqual(json.parentName, "배열", "should be equal")
     }
 
     func testJSONLexerNumbersAndStringsAndBoolsSuccessInLexer() {
@@ -127,15 +127,15 @@ class JSONUnitTest: XCTestCase {
     func testJSONLexerNumbersAndStringsAndBoolsSuccessInParser() {
         let myTokens = Token.jsonArray(tokens: [.bool(value: false), .number(value: 10), .string(value: "\"2.0\""), .number(value: 30.0), .number(value: 4.0), .number(value: 50.0), .string(value: "\"sdf\"")])
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 4, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 7, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        XCTAssertEqual(json.numberCount, 4, "should be equal")
+        XCTAssertEqual(json.stringCount, 2, "should be equal")
+        XCTAssertEqual(json.boolCount, 1, "should be equal")
+        XCTAssertEqual(json.arrayCount, 0, "should be equal")
+        XCTAssertEqual(json.objectCount, 0, "should be equal")
+        XCTAssertEqual(json.parentCount, 7, "should be equal")
+        XCTAssertEqual(json.parentName, "배열", "should be equal")
     }
     
     func testJSONLexerObjectSuccessInLexer() {
@@ -151,15 +151,15 @@ class JSONUnitTest: XCTestCase {
         let myTokens = Token.jsonObject(["\"name\"":.string(value: "\"KIM JUNG\""), "\"alias\"":.string(value: "\"JK\""), "\"level\"":.number(value: 5), "\"married\"":.bool(value: true)])
 
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 4, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "객체", "should be equal")
+        XCTAssertEqual(json.numberCount, 1, "should be equal")
+        XCTAssertEqual(json.stringCount, 2, "should be equal")
+        XCTAssertEqual(json.boolCount, 1, "should be equal")
+        XCTAssertEqual(json.arrayCount, 0, "should be equal")
+        XCTAssertEqual(json.objectCount, 0, "should be equal")
+        XCTAssertEqual(json.parentCount, 4, "should be equal")
+        XCTAssertEqual(json.parentName, "객체", "should be equal")
     }
 
     func testJSONLexerObjectInArrayInLexer(){
@@ -177,15 +177,15 @@ class JSONUnitTest: XCTestCase {
         let jsonObjectTwo = Token.jsonObject(["\"name\"":.string(value: "\"YOON JISU\""), "\"alias\"":.string(value: "\"crong\""), "\"level\"":.number(value: 4), "\"married\"":.bool(value: true)])
         let myTokens = Token.jsonArray(tokens: [jsonObjectOne, jsonObjectTwo])
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 2, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 2, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        XCTAssertEqual(json.numberCount, 0, "should be equal")
+        XCTAssertEqual(json.stringCount, 0, "should be equal")
+        XCTAssertEqual(json.boolCount, 0, "should be equal")
+        XCTAssertEqual(json.arrayCount, 0, "should be equal")
+        XCTAssertEqual(json.objectCount, 2, "should be equal")
+        XCTAssertEqual(json.parentCount, 2, "should be equal")
+        XCTAssertEqual(json.parentName, "배열", "should be equal")
         
     }
 
@@ -203,15 +203,15 @@ class JSONUnitTest: XCTestCase {
         let jsonArray = Token.jsonArray(tokens: [.string(value: "\"hana\""), .string(value: "\"hayul\""), .string(value: "\"haun\"")])
         let myTokens = Token.jsonObject(["\"name\"":.string(value: "\"KIM JUNG\""), "\"alias\"":.string(value: "\"JK\""), "\"level\"":.number(value: 5), "\"children\"":jsonArray])
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 2, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 4, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "객체", "should be equal")
+        XCTAssertEqual(json.numberCount, 1, "should be equal")
+        XCTAssertEqual(json.stringCount, 2, "should be equal")
+        XCTAssertEqual(json.boolCount, 0, "should be equal")
+        XCTAssertEqual(json.arrayCount, 1, "should be equal")
+        XCTAssertEqual(json.objectCount, 0, "should be equal")
+        XCTAssertEqual(json.parentCount, 4, "should be equal")
+        XCTAssertEqual(json.parentName, "객체", "should be equal")
     }
  
     func testJSONLexerArrayAndObjectInArraySuccessForStep4InLexer(){
@@ -232,15 +232,15 @@ class JSONUnitTest: XCTestCase {
         let jsonArray = Token.jsonArray(tokens: [.string(value: "\"java\""), .string(value: "\"javascript\""), .string(value: "\"swift\"")])
         let myTokens = Token.jsonArray(tokens: [jsonObjectOne, jsonArray])
         var parser = JSONParser(myTokens)
-        let jsonData = try! parser.parse()
+        let json = try! parser.parse()
         
-        XCTAssertEqual(jsonData.numberCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.stringCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.boolCount, 0, "should be equal")
-        XCTAssertEqual(jsonData.arrayCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.objectCount, 1, "should be equal")
-        XCTAssertEqual(jsonData.paranet.count, 2, "should be equal")
-        XCTAssertEqual(jsonData.paranet.name, "배열", "should be equal")
+        XCTAssertEqual(json.numberCount, 0, "should be equal")
+        XCTAssertEqual(json.stringCount, 0, "should be equal")
+        XCTAssertEqual(json.boolCount, 0, "should be equal")
+        XCTAssertEqual(json.arrayCount, 1, "should be equal")
+        XCTAssertEqual(json.objectCount, 1, "should be equal")
+        XCTAssertEqual(json.parentCount, 2, "should be equal")
+        XCTAssertEqual(json.parentName, "배열", "should be equal")
     }
     
 

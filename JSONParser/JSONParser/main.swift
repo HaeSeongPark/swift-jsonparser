@@ -34,8 +34,9 @@ while true {
         var lexer = JSONLexer(input: input)
         let token = try lexer.lex()
         var parser = JSONParser(token)
-        let jsonData = try parser.parse()
-        OutputView.printResult(jsonData)
+        let json = try parser.parse()
+        json.printData()
+//        OutputView.printResult(jsonData)
 
     } catch let error {
         print("지원하지 않는 형식을 포함하고 있습니다.", terminator:"")
