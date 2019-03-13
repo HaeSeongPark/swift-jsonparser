@@ -8,7 +8,7 @@
  - 단위 테스트 작성
 
 # 실행결과
-![preview](https://github.com/HaeSeongPark/swift-jsonparser/blob/HaeSeongPark/JSONParserPreview.gif)
+![preview](https://github.com/HaeSeongPark/swift-jsonparser/blob/HaeSeongPark/preview.gif)
 
 
 # 진행 방법
